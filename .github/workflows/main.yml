@@ -49,10 +49,10 @@ jobs:
 
     - name: Connect to EC2 instance and deploy
       run: |
-          ssh-keyscan -H 54.157.140.149 >> ~/.ssh/known_hosts
-          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@54.157.140.149 'sudo docker stop periodapp || true && sudo docker rm -f periodapp || true'
-          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@54.157.140.149 'sudo docker pull kingaby/periodapp:latest'
-          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@54.157.140.149 'sudo docker run -d \
+          ssh-keyscan -H 3.86.162.167 >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@3.86.162.167 'sudo docker stop periodapp || true && sudo docker rm -f periodapp || true'
+          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@3.86.162.167 'sudo docker pull kingaby/periodapp:latest'
+          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@3.86.162.167 'sudo docker run -d \
           -e secret_db_url="${{ secrets.SECRET_DB_URL}}" \
           -e secret_db_username="${{ secrets.SECRET_DB_USERNAME}}" \
           -e secret_db_password="${{ secrets.SECRET_DB_PASSWORD}}" \
