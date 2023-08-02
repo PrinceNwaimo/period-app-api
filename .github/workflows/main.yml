@@ -22,7 +22,7 @@ jobs:
       
     - name: Build and tag Docker image 
       run: |
-        docker build -t jerrywise97/periodapp .
+        docker build -t kingaby/periodapp .
      
     - name: Log in to Docker Hub
       run: |
@@ -30,7 +30,7 @@ jobs:
     
     - name: Push Docker image to Docker Hub
       run: |
-        docker push jerrywise97/periodapp:latest
+        docker push kingaby/periodapp:latest
         
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -42,17 +42,17 @@ jobs:
     - name: Add EC2 private key to SSH agent
       run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/key-air.pem
-          chmod 400 ~/.ssh/key-air.pem
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/MyKeyPair.pem
+          chmod 400 ~/.ssh/MyKeyPair.pem
           eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/key-air.pem
+          ssh-add ~/.ssh/MyKeyPair.pem
 
     - name: Connect to EC2 instance and deploy
       run: |
           ssh-keyscan -H 54.157.140.149 >> ~/.ssh/known_hosts
-          ssh -i ~/.ssh/key-air.pem ec2-user@54.157.140.149 'sudo docker stop periodapp || true && sudo docker rm -f periodapp || true'
-          ssh -i ~/.ssh/key-air.pem ec2-user@54.157.140.149 'sudo docker pull jerrywise97/periodapp:latest'
-          ssh -i ~/.ssh/key-air.pem ec2-user@54.157.140.149 'sudo docker run -d \
+          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@54.157.140.149 'sudo docker stop periodapp || true && sudo docker rm -f periodapp || true'
+          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@54.157.140.149 'sudo docker pull kingaby/periodapp:latest'
+          ssh -i ~/.ssh/MyKeyPair.pem ec2-user@54.157.140.149 'sudo docker run -d \
           -e secret_db_url="${{ secrets.SECRET_DB_URL}}" \
           -e secret_db_username="${{ secrets.SECRET_DB_USERNAME}}" \
           -e secret_db_password="${{ secrets.SECRET_DB_PASSWORD}}" \
@@ -60,6 +60,6 @@ jobs:
           -e secret_security_jwtSecretKey="${{ secrets.SECRET_SECURITY_JWTSECRETKEY}}" \
           --name periodapp \
           -p 8891:8891 \
-          jerrywise97/periodapp:latest'
+          kingaby/periodapp:latest'
 
           
