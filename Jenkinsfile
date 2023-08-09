@@ -37,7 +37,7 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('AKIARE4ABVEADEWU6K5S')
         AWS_SECRET_ACCESS_KEY = credentials('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')
         AWS_DEFAULT_REGION = 'us-east-1'
-        EC2_INSTANCE_IP = '54.164.38.12354.164.38.123'
+        EC2_INSTANCE_IP = '44.204.157.79'
         SSH_KEY = credentials('my-key')
     }
 
@@ -59,17 +59,18 @@ pipeline {
                 script {
 
                     withCredentials([sshUserPrivateKey(credentialsId: my-key, keyFileVariable: 'my-key')]) {
-                        sh "scp -i ${my-key} target/your-app.jar ec2-user@${54.164.38.12354.164.38.123}:~/"
+                        sh "scp -i ${my-key} target/your-app.jar ec2-user@${44.204.157.79}:~/"
                     }
 
                     withCredentials([sshUserPrivateKey(credentialsId: my-key, keyFileVariable: 'my-key')]) {
-                        sh "ssh -i ${my-key} ec2-user@${54.164.38.12354.164.38.123} 'nohup java -jar ~/your-app.jar > app.log 2>&1 &'"
+                        sh "ssh -i ${my-key} ec2-user@${44.204.157.79} 'nohup java -jar ~/your-app.jar > app.log 2>&1 &'"
                     }
                 }
             }
         }
     }
 }
+
 
 
 
