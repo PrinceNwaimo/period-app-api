@@ -115,7 +115,7 @@ pipeline {
                         steps {
                             script {
                                 
-                                withCredentials([string(credentialsId: 'your-ssh-key-id', variable: 'SSH_KEY_FILE')]) {
+                                withCredentials([string(credentials: 'my-key', variable: 'my-key')]) {
                                     sh "ssh -i ${SSH_KEY_FILE} ec2-user@${44.204.157.79} 'docker stop your-app-container-name || true && docker rm your-app-container-name || true'"
                                     sh "ssh -i ${SSH_KEY_FILE} ec2-user@${44.204.157.79} 'docker run -d --name your-app-container-name -p 8080:8080 -e SPRING_PROFILES_ACTIVE=${SPRING_PROFILE} ${DOCKER_REGISTRY_URL}/${imageName}'"
                                 }
