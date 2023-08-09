@@ -29,6 +29,7 @@
 //   }
 // }
 
+
 pipeline {
     agent any
 
@@ -58,16 +59,17 @@ pipeline {
                 script {
 
                     withCredentials([sshUserPrivateKey(credentialsId: my-key, keyFileVariable: 'my-key')]) {
-                        sh "scp -i ${my-key} target/your-app.jar ec2-user@${4.164.38.12354.164.38.123}:~/"
+                        sh "scp -i ${my-key} target/your-app.jar ec2-user@${54.164.38.12354.164.38.123}:~/"
                     }
 
-                    // SSH into the EC2 instance and start the application
                     withCredentials([sshUserPrivateKey(credentialsId: my-key, keyFileVariable: 'my-key')]) {
-                        sh "ssh -i ${my-key} ec2-user@${4.164.38.12354.164.38.123} 'nohup java -jar ~/your-app.jar > app.log 2>&1 &'"
+                        sh "ssh -i ${my-key} ec2-user@${54.164.38.12354.164.38.123} 'nohup java -jar ~/your-app.jar > app.log 2>&1 &'"
                     }
                 }
             }
         }
     }
 }
+
+
 
